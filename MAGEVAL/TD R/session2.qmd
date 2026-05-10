@@ -1,0 +1,85 @@
+---
+title: "Session 2 — Exercices R"
+author: "Léa Holder, MAGEVAL 3"
+format: html
+---
+
+## Exercice 3 — Analyse des températures par groupe
+
+On charge les données et on crée deux sous-groupes : pays pauvres et chauds d'un côté, pays riches et froids de l'autre.
+
+```{r}
+library(readxl)
+emigration_climate <- read_excel("merrieks.xls")
+
+poor_hot <- subset(emigration_climate, poor == 1 & hot == 1)
+rich_cold <- subset(emigration_climate, poor == 0 & hot == 0)
+```
+
+On calcule ensuite la température moyenne pour chaque groupe :
+
+```{r}
+mean(poor_hot$temp_mean, na.rm = TRUE)
+mean(rich_cold$temp_mean, na.rm = TRUE)
+```
+
+Les pays pauvres et chauds ont une température moyenne d'environ **26,3°C**, contre **17,2°C** pour les pays riches et froids.
+
+------------------------------------------------------------------------
+
+## Exercice 4 — Structures conditionnelles (if/else)
+
+On teste une condition selon les valeurs de x et y, et on affecte z en conséquence.
+
+```{r}
+x <- 1
+y <- 3
+
+if (x > y) {
+  z <- x * y
+  print("x est plus grand que y")
+} else {
+  z <- x + 5 * y
+  print("x est inférieur ou égal à y")
+}
+
+print(paste("z =", z))
+```
+
+```{r}
+x <- 5
+y <- 3
+
+if (x > y) {
+  z <- x * y
+  print("x est plus grand que y")
+} else {
+  z <- x + 5 * y
+  print("x est inférieur ou égal à y")
+}
+
+print(paste("z =", z))
+```
+
+------------------------------------------------------------------------
+
+## Exercice 5 — Téléchargement automatisé des données électorales
+
+On automatise le téléchargement des résultats des législatives 2024 pour les 18 circonscriptions de Paris via une boucle.
+
+```{r}
+download_data <- function(x) {
+  url <- sprintf(
+    "https://opendata.paris.fr/api/datasets/1.0/elections-legislatives-2024-1ertour/attachments/ddct_berp_legislatives_2024_tour1_circ_%02d_20240630_xlsx/",
+    x
+  )
+  file <- sprintf("circ_%02d_20240630.xls", x)
+  download.file(url, file)
+}
+
+for (x in 1:18) {
+  download_data(x)
+}
+```
+
+Le lien contient le numéro de circonscription (`circ_01`, `circ_02`...), ce qui permet de le générer dynamiquement avec `sprintf` et `%02d` pour le formatage à deux chiffres.
