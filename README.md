@@ -1,3 +1,6 @@
-# scripts-R-publique
-Travaux R - économétrie et analyse de données. 
-Réalisés dans le cadre du Magistère d'Evaluation des Politiques Publiques et d'Economie du Développement de l'Université de Bordeaux 
+# R Scripts — Econometrics & Data Analysis
+
+Projects completed as part of the Master's in Public Policy Evaluation
+and Development Economics at the University of Bordeaux.
+
+**Tools: R, Quarto**
